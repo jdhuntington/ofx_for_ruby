@@ -2,6 +2,8 @@
 Gemfile.lock
 test/citi/fixtures/citi-accounts
 test/citi/fixtures/citi-credentials
+test/citi/fixtures/usaa-accounts
+test/citi/fixtures/usaa-credentials
 test/capital_one/fixtures/capital-one-accounts
 test/capital_one/fixtures/capital-one-credentials
 pkg

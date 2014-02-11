@@ -21,5 +21,5 @@ Gem::Specification.new do |s|
   
   s.add_development_dependency "racc"
   s.add_development_dependency "rex"
-  s.add_development_dependency "rcov"
+  s.add_development_dependency "simplecov"
 end
