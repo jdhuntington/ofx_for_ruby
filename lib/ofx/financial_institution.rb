@@ -22,6 +22,12 @@ module OFX
 
         def self.get_institution(financial_institution_name, ofx_client_id=nil, ssl_version=nil)
             case financial_institution_name
+                when 'USAA'
+                    FinancialInstitution.new('USAA',
+                                             URI.parse('https://service2.usaa.com/ofx/OFXServlet'),
+                                             OFX::Version.new("1.0.2"),
+                                             'USAA', '24591', '314074269',
+                                             ofx_client_id, ssl_version)                  
                 when 'Capital One'
                     FinancialInstitution.new('Capital One',
                                              URI.parse('https://onlinebanking.capitalone.com/ofx/process.ofx'),
