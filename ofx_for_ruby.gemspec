@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version = OFX::VERSION.to_dotted_s
   s.platform = Gem::Platform::RUBY
   
-  s.authors = ["Chris Guidry"]
+  s.authors = ["Tim Booher, Chris Guidry"]
   s.description = "OFX for Ruby is a pure Ruby implementation of Open Financial Exchange specifications (1.0.2 through 2.1.1) for building both financial clients and servers, providing parsers/serializers for each version, and a uniform object model across all versions."
   s.email = ["chrisguidry@gmail.com"]
   s.summary = "Pure Ruby implementation of Open Financial Exchange specifications"
