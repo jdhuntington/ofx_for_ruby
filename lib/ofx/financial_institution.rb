@@ -212,7 +212,9 @@ module OFX
             request_body = serializer.to_http_post_body(document)
 
             client = OFX::HTTPClient.new(@ofx_uri)
+            puts request_body
             response_body = client.send(request_body, @ofx_ssl_version)
+            puts response_body
 
             return serializer.from_http_response_body(response_body)
         end
