@@ -1,17 +1,17 @@
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
-# 
+#
 # OFX for Ruby is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # OFX for Ruby is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -21,7 +21,7 @@ class OFXVersionTest < Test::Unit::TestCase
 
     def test_creating_from_array
         version = OFX::Version.new([1, 2, 3])
-        
+
         assert_equal OFX::Version.new('1.2.3'), version
 
         assert_equal 1, version.major
@@ -37,7 +37,7 @@ class OFXVersionTest < Test::Unit::TestCase
         version = OFX::Version.new('123')
 
         assert_equal OFX::Version.new('1.2.3'), version
-        
+
         assert_equal 1, version.major
         assert_equal 2, version.minor
         assert_equal 3, version.revision
@@ -51,7 +51,7 @@ class OFXVersionTest < Test::Unit::TestCase
         version = OFX::Version.new('1.2.3')
 
         assert_equal OFX::Version.new([1, 2, 3]), version
-        
+
         assert_equal 1, version.major
         assert_equal 2, version.minor
         assert_equal 3, version.revision
@@ -65,7 +65,7 @@ class OFXVersionTest < Test::Unit::TestCase
         version = OFX::Version.new(1)
 
         assert_equal OFX::Version.new([1, 0, 0]), version
-        
+
         assert_equal 1, version.major
         assert_equal 0, version.minor
         assert_equal 0, version.revision
@@ -79,7 +79,7 @@ class OFXVersionTest < Test::Unit::TestCase
         version = OFX::Version.new('1')
 
         assert_equal OFX::Version.new([1, 0, 0]), version
-        
+
         assert_equal 1, version.major
         assert_equal 0, version.minor
         assert_equal 0, version.revision
@@ -128,12 +128,12 @@ class OFXVersionTest < Test::Unit::TestCase
         assert OFX::Version.new('000').empty?
         assert OFX::Version.new('0.0.0').empty?
     end
-    
+
     def test_as_hash_key
         hash =
-        { OFX::Version.new(1) => 1, 
+        { OFX::Version.new(1) => 1,
           OFX::Version.new(2) => 2}
-          
+
         assert_equal 1, hash[OFX::Version.new('1')]
         assert_equal 2, hash[OFX::Version.new('2')]
         assert_equal nil, hash[OFX::Version.new('3')]

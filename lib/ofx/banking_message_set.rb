@@ -1,17 +1,17 @@
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
-# 
+#
 # OFX for Ruby is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # OFX for Ruby is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -24,12 +24,12 @@ module OFX
             1
         end
     end
-    
+
     class BankingMessageSetProfile < MessageSetProfile
         def self.message_set_class
             OFX::BankingMessageSet
         end
-        
+
         attr_accessor :invalid_account_types
         attr_accessor :closing_statement_available
         def closing_statement_available?
@@ -86,7 +86,7 @@ module OFX
             supports_notifications
         end
     end
-    
+
     class BankingAccount
         attr_accessor :bank_identifier
         attr_accessor :branch_identifier
@@ -101,8 +101,8 @@ module OFX
         attr_accessor :transfer_destination
         attr_accessor :status
     end
-    
-    
+
+
     class BankingStatementRequest < TransactionalRequest
         attr_accessor :account
         attr_accessor :include_transactions
@@ -115,10 +115,10 @@ module OFX
         attr_accessor :default_currency
         attr_accessor :account
         attr_accessor :marketing_information
-        
+
         attr_accessor :ledger_balance
         attr_accessor :available_balance
-        
+
         attr_accessor :transaction_range
         attr_accessor :transactions
     end

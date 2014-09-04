@@ -1,17 +1,17 @@
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
-# 
+#
 # OFX for Ruby is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # OFX for Ruby is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -32,7 +32,7 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
         client = OFX::FinancialClient.new([[OFX::FinancialInstitutionIdentification.new('Citigroup', '24909'),
                                             OFX::UserCredentials.new(@user_name, @password)]])
         requestDocument.message_sets << client.create_signon_request_message('24909')
-        
+
         client.date_of_last_profile_update = DateTime.new(2001, 1, 1)
         requestDocument.message_sets << client.create_profile_update_request_message()
 
@@ -40,12 +40,12 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert response_document != nil
 
         verify_citi_header response_document
-        
+
         assert_not_equal nil, response_document.message_sets
         assert_equal 2, response_document.message_sets.length
-        
+
         verify_citi_signon_response response_document
-        
+
         profile_message = response_document.message_sets[1]
         assert profile_message.kind_of?(OFX::FinancialInstitutionProfileMessageSet)
         assert_equal 1, profile_message.responses.length
@@ -58,7 +58,7 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal 0, profile_response.status.code
         assert_equal :information, profile_response.status.severity
         assert_equal nil, profile_response.status.message
-        
+
         assert_not_equal nil, profile_response.date_of_last_profile_update
         assert_equal "Citigroup", profile_response.financial_institution_name
         assert_equal "8787 Baypine Road", profile_response.address
@@ -71,12 +71,12 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal nil, profile_response.facsimile_telephone
         assert_equal URI.parse("http://www.citicards.com"), profile_response.url
         assert_equal nil, profile_response.email_address
-        
-        
-        
+
+
+
         assert_not_equal nil, profile_response.message_sets
         assert_equal 4, profile_response.message_sets.length
-        
+
         # unsupported message sets
         assert_equal nil, profile_response.message_sets[OFX::BankingMessageSet]
         assert_equal nil, profile_response.message_sets[OFX::InvestmentStatementMessageSet]
@@ -84,8 +84,8 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal nil, profile_response.message_sets[OFX::WireFundsTransferMessageSet]
         assert_equal nil, profile_response.message_sets[OFX::InvestmentSecurityListMessageSet]
         assert_equal nil, profile_response.message_sets[OFX::PaymentMessageSet]
-        assert_equal nil, profile_response.message_sets[OFX::EmailMessageSet]   
-        
+        assert_equal nil, profile_response.message_sets[OFX::EmailMessageSet]
+
         # signon
         assert_not_equal nil, profile_response.message_sets[OFX::SignonMessageSet]
         assert_equal 1, profile_response.message_sets[OFX::SignonMessageSet].length
@@ -102,7 +102,7 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal 'ENG', profile.language
         assert_equal 'LITE', profile.synchronization_mode
         assert_equal true, profile.supports_response_file_error_recovery?
-        
+
         # signup
         assert_not_equal nil, profile_response.message_sets[OFX::SignupMessageSet]
         assert_equal 1, profile_response.message_sets[OFX::SignupMessageSet].length
@@ -144,7 +144,7 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal 'LITE', profile.synchronization_mode
         assert_equal true, profile.supports_response_file_error_recovery?
         assert_equal true, profile.closing_statement_available
-        
+
         # profile
         assert_not_equal nil, profile_response.message_sets[OFX::FinancialInstitutionProfileMessageSet]
         assert_equal 1, profile_response.message_sets[OFX::FinancialInstitutionProfileMessageSet].length
@@ -174,7 +174,7 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal false, signon_realm.supports_pin_changes
         assert_equal false, signon_realm.requires_initial_pin_change
     end
-    
+
 #    def test_requesting_up_to_date_fi_profile_from_citi
 #        financial_institution = OFX::FinancialInstitution.get_institution('Capital One')
 #        requestDocument = financial_institution.create_request_document
@@ -182,7 +182,7 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
 #        client = OFX::FinancialClient.new([[OFX::FinancialInstitutionIdentification.new('Hibernia', '1001'),
 #                                            OFX::UserCredentials.new(@capitalOneUserName, @capitalOnePassword)]])
 #        requestDocument.message_sets << client.create_signon_request_message('1001')
-#        
+#
 #        client.date_of_last_profile_update = DateTime.now
 #        requestDocument.message_sets << client.create_profile_update_request_message()
 #
@@ -190,12 +190,12 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
 #        assert response_document != nil
 #
 #        verify_citi_header response_document
-#        
+#
 #        assert_not_equal nil, response_document.message_sets
 #        assert_equal 2, response_document.message_sets.length
-#        
+#
 #        verify_citi_signon_response response_document
-#        
+#
 #        profile_message = response_document.message_sets[1]
 #        assert profile_message.kind_of?(OFX::FinancialInstitutionProfileMessageSet)
 #        assert_equal 1, profile_message.responses.length
@@ -221,10 +221,10 @@ class CitiFinancialInstitutionProfileTest < Test::Unit::TestCase
 #        assert_equal nil, profile_response.facsimile_telephone
 #        assert_equal nil, profile_response.url
 #        assert_equal nil, profile_response.email_address
-#        
+#
 #        assert_not_equal nil, profile_response.message_sets
 #        assert_equal 0, profile_response.message_sets.length
-#        
+#
 #        assert_not_equal nil, profile_response.signon_realms
 #        assert_equal 0, profile_response.signon_realms.length
 #    end

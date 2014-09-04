@@ -1,17 +1,17 @@
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
-# 
+#
 # OFX for Ruby is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # OFX for Ruby is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -26,7 +26,7 @@ module USAAHelper
             @user_name, @password = file.gets.split(',')
         end
     end
-    
+
     def setup_usaa_accounts()
         File.open(File.dirname(__FILE__) + '/fixtures/usaa-accounts') do |file|
             @accounts = {}
@@ -49,12 +49,12 @@ module USAAHelper
         assert_not_equal(nil, response_document.header.unique_identifier)
         assert_not_equal(nil, response_document.header.previous_unique_identifier)
     end
-    
+
     def verify_usaa_signon_response(response_document)
         signon_message = response_document.message_sets[0]
         assert signon_message.kind_of?(OFX::SignonMessageSet)
         assert_equal(1, signon_message.responses.length)
-        
+
         signon_response = signon_message.responses[0]
         assert signon_response.kind_of?(OFX::SignonResponse)
         assert_not_equal(nil, signon_response.status)
@@ -73,5 +73,5 @@ module USAAHelper
         assert_equal('24591', signon_response.financial_institution_identification.financial_institution_identifier)
         assert_equal(nil, signon_response.session_cookie)
     end
-    
+
 end

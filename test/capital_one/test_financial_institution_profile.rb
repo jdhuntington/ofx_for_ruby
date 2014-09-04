@@ -1,17 +1,17 @@
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
-# 
+#
 # OFX for Ruby is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # OFX for Ruby is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -32,7 +32,7 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         client = OFX::FinancialClient.new([[OFX::FinancialInstitutionIdentification.new('Hibernia', '1001'),
                                             OFX::UserCredentials.new(@user_name, @password)]])
         requestDocument.message_sets << client.create_signon_request_message('1001')
-        
+
         client.date_of_last_profile_update = DateTime.new(2001, 1, 1)
         requestDocument.message_sets << client.create_profile_update_request_message()
 
@@ -40,12 +40,12 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert response_document != nil
 
         verify_capital_one_header response_document
-        
+
         assert_not_equal nil, response_document.message_sets
         assert_equal 2, response_document.message_sets.length
-        
+
         verify_capital_one_signon_response response_document
-        
+
         profile_message = response_document.message_sets[1]
         assert profile_message.kind_of?(OFX::FinancialInstitutionProfileMessageSet)
         assert_equal 1, profile_message.responses.length
@@ -58,7 +58,7 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal 0, profile_response.status.code
         assert_equal :information, profile_response.status.severity
         assert_not_equal nil, profile_response.status.message
-        
+
         assert_not_equal nil, profile_response.date_of_last_profile_update
         assert_equal "Capital One Bank", profile_response.financial_institution_name
         assert_equal "PO Box 61540", profile_response.address
@@ -71,19 +71,19 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal nil, profile_response.facsimile_telephone
         assert_equal URI.parse("https://onlinebanking.capitalone.com"), profile_response.url
         assert_equal "emailus@capitaloneinfo.com", profile_response.email_address
-        
-        
-        
+
+
+
         assert_not_equal nil, profile_response.message_sets
         assert_equal 6, profile_response.message_sets.length
-        
+
         # unsupported message sets
         assert_equal nil, profile_response.message_sets[OFX::CreditCardStatementMessageSet]
         assert_equal nil, profile_response.message_sets[OFX::InvestmentStatementMessageSet]
         assert_equal nil, profile_response.message_sets[OFX::InterbankFundsTransferMessageSet]
         assert_equal nil, profile_response.message_sets[OFX::WireFundsTransferMessageSet]
         assert_equal nil, profile_response.message_sets[OFX::InvestmentSecurityListMessageSet]
-        
+
         # signon
         assert_not_equal nil, profile_response.message_sets[OFX::SignonMessageSet]
         assert_equal 1, profile_response.message_sets[OFX::SignonMessageSet].length
@@ -100,7 +100,7 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal 'ENG', profile.language
         assert_equal 'LITE', profile.synchronization_mode
         assert_equal true, profile.supports_response_file_error_recovery?
-        
+
         # signup
         assert_not_equal nil, profile_response.message_sets[OFX::SignupMessageSet]
         assert_equal 1, profile_response.message_sets[OFX::SignupMessageSet].length
@@ -171,7 +171,7 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_not_equal nil, profile.email_profile
         assert_equal true, profile.email_profile.supports_banking_email?
         assert_equal false, profile.email_profile.supports_notifications?
-        
+
 
         # payments
         assert_not_equal nil, profile_response.message_sets[OFX::PaymentMessageSet]
@@ -208,7 +208,7 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal true, profile.supports_response_file_error_recovery?
         assert_equal true, profile.supports_email?
         assert_equal false, profile.supports_mime_messages?
-        
+
         # profile
         assert_not_equal nil, profile_response.message_sets[OFX::FinancialInstitutionProfileMessageSet]
         assert_equal 1, profile_response.message_sets[OFX::FinancialInstitutionProfileMessageSet].length
@@ -238,7 +238,7 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal true, signon_realm.supports_pin_changes
         assert_equal false, signon_realm.requires_initial_pin_change
     end
-    
+
     def test_requesting_up_to_date_fi_profile_from_capital_one
         financial_institution = OFX::FinancialInstitution.get_institution('Capital One')
         requestDocument = financial_institution.create_request_document
@@ -246,7 +246,7 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         client = OFX::FinancialClient.new([[OFX::FinancialInstitutionIdentification.new('Hibernia', '1001'),
                                             OFX::UserCredentials.new(@user_name, @password)]])
         requestDocument.message_sets << client.create_signon_request_message('1001')
-        
+
         client.date_of_last_profile_update = DateTime.now
         requestDocument.message_sets << client.create_profile_update_request_message()
 
@@ -254,12 +254,12 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert response_document != nil
 
         verify_capital_one_header response_document
-        
+
         assert_not_equal nil, response_document.message_sets
         assert_equal 2, response_document.message_sets.length
-        
+
         verify_capital_one_signon_response response_document
-        
+
         profile_message = response_document.message_sets[1]
         assert profile_message.kind_of?(OFX::FinancialInstitutionProfileMessageSet)
         assert_equal 1, profile_message.responses.length
@@ -285,10 +285,10 @@ class CapitalOneFinancialInstitutionProfileTest < Test::Unit::TestCase
         assert_equal nil, profile_response.facsimile_telephone
         assert_equal nil, profile_response.url
         assert_equal nil, profile_response.email_address
-        
+
         assert_not_equal nil, profile_response.message_sets
         assert_equal 0, profile_response.message_sets.length
-        
+
         assert_not_equal nil, profile_response.signon_realms
         assert_equal 0, profile_response.signon_realms.length
     end

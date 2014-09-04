@@ -1,17 +1,17 @@
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
-# 
+#
 # OFX for Ruby is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # OFX for Ruby is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -48,7 +48,7 @@ module OFX
                     body += message_set.to_ofx_102_s
                 end
                 body += "</OFX>\n"
-                
+
                 #print body
 
                 body
@@ -65,18 +65,18 @@ module OFX
 
                 body = header_match.post_match
                 header = Header.from_ofx_102_s(header_match[0].strip)
-            
+
                 parser = OFX::OFX102::Parser.new
                 parser.scan_str body
-                
+
                 if parser.documents.length > 1
                     raise NotImplementedError, "Multiple response documents"
                 end
-                
+
                 #require 'pp'
                 #print body
                 #pp parser.ofx_hashes[0]
-                
+
                 document = parser.documents[0]
                 document.header = header
                 document
