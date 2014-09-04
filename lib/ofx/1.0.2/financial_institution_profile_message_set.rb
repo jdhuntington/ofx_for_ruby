@@ -1,17 +1,17 @@
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
-# 
+#
 # OFX for Ruby is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # OFX for Ruby is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -22,10 +22,10 @@ module OFX
         def ofx_102_message_set_name
             'PROF'
         end
-        
+
         def self.from_ofx_102_hash(message_set_hash)
             message_set = FinancialInstitutionProfileMessageSet.new
-            
+
             message_set_hash.each_pair() do |transaction_name, transaction_hash|
                 case transaction_name
                     when "PROFTRNRQ" then   message_set.requests << FinancialInstitutionProfileRequest.from_ofx_102_hash(transaction_hash)
@@ -33,17 +33,17 @@ module OFX
                     else                    raise NotImplementedError, transaction_name
                 end
             end
-            
+
             return message_set
         end
     end
-    
+
     class FinancialInstitutionProfileMessageSetProfile < MessageSetProfile
         def self.from_ofx_102_hash(message_set_description_hash)
             profile = OFX::FinancialInstitutionProfileMessageSetProfile.new
             profile.message_set_class = OFX::FinancialInstitutionProfileMessageSet
             profile.from_ofx_102_hash(message_set_description_hash)
-        
+
             profile
         end
     end
@@ -56,30 +56,30 @@ module OFX
             "        <CLIENTROUTING>#{client_routing}\n" +
             "        <DTPROFUP>#{date_of_last_profile_update.to_ofx_102_s}"
         end
-        
+
         def self.from_ofx_102_hash(transaction_hash)
             raise NotImplementedError
         end
     end
-    
+
     class FinancialInstitutionProfileResponse < TransactionalResponse
         def ofx_102_name
             'PROF'
         end
-        
+
         def ofx_102_response_body
             raise NotImplementedError
         end
-        
+
         def self.from_ofx_102_hash(transaction_hash)
             response = FinancialInstitutionProfileResponse.new
-                       
+
             response.transaction_identifier = transaction_hash['TRNUID']
             response.status = OFX::Status.from_ofx_102_hash(transaction_hash['STATUS'])
-            
+
             response.message_sets = {}
             response.signon_realms = []
-            
+
             response_hash = transaction_hash['PROFRS']
             if response_hash
                 response.date_of_last_profile_update = response_hash['DTPROFUP'].to_datetime
@@ -96,25 +96,25 @@ module OFX
                 response.facsimile_telephone = response_hash['FAXPHONE']
                 response.url = URI.parse(response_hash['URL']) if response_hash['URL']
                 response.email_address = response_hash['EMAIL']
-                
+
                 message_sets_hash = response_hash['MSGSETLIST']
                 #require 'pp'
                 #pp message_sets_hash
                 message_sets_hash.each_pair do |message_set_name, message_set_descriptions|
-                    profile_class = MESSAGE_SET_NAMES_TO_PROFILE_CLASSES[message_set_name]                    
+                    profile_class = MESSAGE_SET_NAMES_TO_PROFILE_CLASSES[message_set_name]
                     supported_messages = response.message_sets[profile_class.message_set_class] = {}
                     message_set_descriptions.each do |message_set_version_name, message_set_description|
-                        supported_messages[OFX::Version.new(message_set_version_name[-1..-1].to_i)] = 
+                        supported_messages[OFX::Version.new(message_set_version_name[-1..-1].to_i)] =
                             profile_class.from_ofx_102_hash(message_set_description)
                     end
                 end
-                
+
                 signons_hash = response_hash['SIGNONINFOLIST']
                 #require 'pp'
                 #pp signons_hash
                 signons_hash.each_pair do |aggregate_name, signon_realm_info|
                     signon_realm = SignonRealm.new
-                    
+
                     signon_realm.name = signon_realm_info['SIGNONREALM']
                     signon_realm.password_length_constraint = signon_realm_info['MIN'].to_i..signon_realm_info['MAX'].to_i
                     signon_realm.password_characters_constraint = case signon_realm_info['CHARTYPE']
@@ -128,14 +128,14 @@ module OFX
                     signon_realm.allows_spaces = signon_realm_info['SPACES'] == 'Y'
                     signon_realm.supports_pin_changes = signon_realm_info['PINCH'] == 'Y'
                     signon_realm.requires_initial_pin_change = signon_realm_info['CHGPINFIRST'] == 'Y'
-        
+
                     response.signon_realms << signon_realm
                 end
             end
-            
+
             return response
         end
-        
+
         private
         MESSAGE_SET_NAMES_TO_PROFILE_CLASSES =
         {

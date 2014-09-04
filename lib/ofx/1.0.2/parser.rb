@@ -23,7 +23,7 @@ attr :ofx_hashes
 def initialize
     @documents = []
     @ofx_hashes = []
-    
+
     @tags_stack = []
 end
 
@@ -173,14 +173,14 @@ Racc_debug_parser = false
 
 module_eval(<<'.,.,', 'ofx_102.racc', 25)
   def _reduce_4(val, _values, result)
-     start_tag(val[1]) 
+     start_tag(val[1])
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'ofx_102.racc', 26)
   def _reduce_5(val, _values, result)
-     end_tag(val[1]) 
+     end_tag(val[1])
     result
   end
 .,.,
@@ -199,7 +199,7 @@ module_eval(<<'.,.,', 'ofx_102.racc', 26)
 
 module_eval(<<'.,.,', 'ofx_102.racc', 36)
   def _reduce_12(val, _values, result)
-     data_value(val[1])  
+     data_value(val[1])
     result
   end
 .,.,
