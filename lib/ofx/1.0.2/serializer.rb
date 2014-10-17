@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
@@ -34,6 +35,8 @@ require File.dirname(__FILE__) + '/investment_security_list_message_set'
 require File.dirname(__FILE__) + '/financial_institution_profile_message_set'
 
 require File.dirname(__FILE__) + '/parser'
+
+require 'time'
 
 module OFX
     module OFX102
