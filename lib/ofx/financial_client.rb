@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
@@ -47,7 +48,7 @@ module OFX
             when 'Money'
                 OFX::ApplicationIdentification.new('Money', '1600')
             when 'Quicken'
-                OFX::ApplicationIdentification.new('QWIN', '1700')
+                OFX::ApplicationIdentification.new('QWIN', '2200')
             when 'QuickBooks'
                 OFX::ApplicationIdentification.new('QBW', '1800')
             else

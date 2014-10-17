@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright © 2007 Chris Guidry <chrisguidry@gmail.com>
 #
 # This file is part of OFX for Ruby.
@@ -90,14 +91,14 @@ module OFX
             body += account.to_ofx_102_request_body
 
             body +=
-            "        <INCTRAN>\n" +
-            "          <INCLUDE>#{include_transactions.to_ofx_102_s}\n" if include_transactions
+            "        <INCTRAN>\n" if include_transactions
 
             body +=
             "          <DTSTART>#{included_range.begin.to_ofx_102_s}\n" +
             "          <DTEND>#{included_range.end.to_ofx_102_s}\n" if included_range
 
             body +=
+            "          <INCLUDE>#{include_transactions.to_ofx_102_s}\n" +
             "        </INCTRAN>" if include_transactions
 
             body
